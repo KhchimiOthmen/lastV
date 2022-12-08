@@ -1,0 +1,70 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <h1>User index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cin</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Sexe</th>
+                <th>Age</th>
+                <th>Username</th>
+                <th>Mdp</th>
+                <th>Numtel</th>
+                <th>Adress</th>
+                <th>Mail</th>
+                <th>Id_group</th>
+                <th>role</th>
+                <th>Date_inscri</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.cin }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.sexe }}</td>
+                <td>{{ user.age }}</td>
+                <td>{{ user.Username }}</td>
+                <td>{{ user.mdp }}</td>
+                <td>{{ user.numtel }}</td>
+                <td>{{ user.adress }}</td>
+                <td>{{ user.mail }}</td>
+                <td>{{ user.idGroup }}</td>
+                <td>
+                    {{ user.role }}
+                </td>
+                <td>{{ user.dateInscri }}</td>
+                <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    {% if user.etat==0 %}
+                    <a href="{{ path('user_etat', {'id': user.id}) }}"onclick="return confirm('Are you sure you want to block this user ?')
+                                        ">block</a>
+                    {% elseif user.etat==1%}
+                        <a href=""onclick="return confirm('Are you sure you want to unblock this user ?')
+                                        " href="">unblock</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        {{ knp_pagination_render(users) }}
+        </tbody>
+    </table>
+
+
+{% endblock %}
